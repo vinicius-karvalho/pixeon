@@ -27,4 +27,8 @@ public class HealthcareInstitution extends BaseEntity {
     @Getter @Setter
     @Column(nullable = false)
     private Integer coins;
-}
+
+    public HealthcareInstitution(Long id) {
+        this.setId(id);
+    }
+ }

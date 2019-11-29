@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vinicius.pixeon.challenge.domain.HealthcareInstitution;
@@ -27,6 +29,11 @@ public class HealthcareInstitutionService {
 
     public HealthcareInstitution findByCnpj(String cnpj) {
         return repo.findByCnpj(cnpj);
+    }
+
+    @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
+    public int chargeOneCoin() {
+        return repo.chargeOneCoin();
     }
 
     @Transactional

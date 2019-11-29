@@ -48,4 +48,7 @@ public class Exam extends BaseEntity {
     @Getter @Setter
     @Column(nullable = false)
     private String procedureName;
+
+    @Getter @Setter
+    private Boolean firstRead = Boolean.TRUE;
 }
