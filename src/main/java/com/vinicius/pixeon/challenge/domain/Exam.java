@@ -1,5 +1,6 @@
 package com.vinicius.pixeon.challenge.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -25,20 +26,26 @@ public class Exam extends BaseEntity {
     private HealthcareInstitution healthcareInstitution;
 
     @Getter @Setter
+    @Column(nullable = false)
     private String patientName;
 
     @Getter @Setter
+    @Column(nullable = false)
     private Integer patientAge;
 
     @Getter @Setter
+    @Column(nullable = false)
     private Gender patientGender;
 
     @Getter @Setter
+    @Column(nullable = false)
     private String physicianName;
 
     @Getter @Setter
+    @Column(nullable = false)
     private String physicianCRM;
 
     @Getter @Setter
+    @Column(nullable = false)
     private String procedureName;
 }
