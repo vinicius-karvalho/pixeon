@@ -32,8 +32,8 @@ public class HealthcareInstitutionService {
     }
 
     @Transactional(isolation = Isolation.SERIALIZABLE, propagation = Propagation.REQUIRES_NEW)
-    public int chargeOneCoin() {
-        return repo.chargeOneCoin();
+    public int chargeOneCoin(Long id) {
+        return repo.chargeOneCoin(id);
     }
 
     @Transactional

@@ -56,7 +56,7 @@ public class HealthcareInstitutionRestController {
 
     @PutMapping(value = "/{id}")
     public Integer chargeOneCoin(@PathVariable(name = "id", required = true) Long id) {
-        return service.chargeOneCoin();
+        return service.chargeOneCoin(id);
     }
 
 }

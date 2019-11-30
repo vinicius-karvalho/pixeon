@@ -24,6 +24,14 @@ public class ExamService {
 
     public ExamResponseDto findById(Long id) {
         Optional<Exam> exam = repo.findById(id);
+
+        // Se for o primeiro acesso ao exame debitar uma moeda da instituição
+        // E atualiza a flag do exame
+        if (exam.isPresent() && exam.get().getFirstRead()) {
+            healthcareService.chargeOneCoin(exam.get().getHealthcareInstitution().getId());
+            repo.setfirstReadToFalse(id);
+        }
+
         if (exam.isPresent()) {
             return new ExamResponseDto(exam.get(), null);
         } else {

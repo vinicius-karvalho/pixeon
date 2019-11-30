@@ -16,6 +16,6 @@ public interface HealthcareInstitutionRepository extends JpaRepository<Healthcar
     HealthcareInstitution findByCnpj(String cnpj);
 
     @Modifying
-    @Query("update HealthcareInstitution hc set hc.coins = (hc.coins-1) where hc.coins > 0")
-    int chargeOneCoin();
+    @Query("update HealthcareInstitution hc set hc.coins = (hc.coins-1) where hc.coins > 0 and hc.id = ?1")
+    int chargeOneCoin(Long id);
 }
