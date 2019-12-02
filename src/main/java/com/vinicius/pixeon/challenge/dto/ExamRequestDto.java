@@ -16,6 +16,9 @@ import lombok.ToString;
 public class ExamRequestDto {
 
     @Getter @Setter
+    private Long id;
+
+    @Getter @Setter
     private Long healthcareId;
 
     @Getter @Setter

@@ -36,6 +36,10 @@ public class HealthcareInstitutionService {
         return repo.chargeOneCoin(id);
     }
 
+    public boolean hasCoins(Long id) {
+        return repo.retrieveNumberOfCoins(id) > 0;
+    }
+
     @Transactional
     public HealthcareInstitution save(HealthcareInstitutionRequestDto dto) {
         validateSaveOperation(dto);

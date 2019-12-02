@@ -13,5 +13,5 @@ public interface ExamRepository extends JpaRepository<Exam, Long> {
 
     @Modifying
     @Query("update Exam e set.firstRead = false where e.id = ?1")
-    int setfirstReadToFalse(Long id);
+    int updatefirstReadToFalse(Long id);
 }
