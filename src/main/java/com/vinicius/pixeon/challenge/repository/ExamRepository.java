@@ -12,6 +12,6 @@ import com.vinicius.pixeon.challenge.domain.Exam;
 public interface ExamRepository extends JpaRepository<Exam, Long> {
 
     @Modifying
-    @Query("update Exam e set.firstRead = false where e.id = ?1")
+    @Query("update Exam e set e.firstRead = false where e.id = ?1")
     int updatefirstReadToFalse(Long id);
 }

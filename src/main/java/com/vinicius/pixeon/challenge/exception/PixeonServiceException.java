@@ -19,4 +19,5 @@ public class PixeonServiceException extends RuntimeException {
     public PixeonServiceException(String message, Throwable cause) {
         super(message, cause);
     }
+
 }

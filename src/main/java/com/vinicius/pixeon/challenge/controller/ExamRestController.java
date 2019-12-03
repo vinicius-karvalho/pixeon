@@ -24,7 +24,7 @@ public class ExamRestController {
     @Autowired
     private ExamService service;
 
-    @GetMapping(value = "/{idExam}/{idHealthcare}", produces = "application/json; charset=utf-8")
+    @GetMapping(value = {"/{idExam}", "/{idExam}/{idHealthcare}"}, produces = "application/json; charset=utf-8")
     public ExamResponseDto retrieveExam(@PathVariable(name = "idExam", required = true) Long idExam,
                                         @PathVariable(name = "idHealthcare", required = false) Long idHealthcare) {
         return service.findById(idExam, idHealthcare);
@@ -37,7 +37,7 @@ public class ExamRestController {
 
     @PutMapping(produces = "application/json; charset=utf-8", consumes = "application/json")
     public ExamResponseDto updateExam(@RequestBody ExamRequestDto reqDto) {
-        return service.save(reqDto);
+        return service.update(reqDto);
     }
 
     @DeleteMapping(value = "/{id}")
