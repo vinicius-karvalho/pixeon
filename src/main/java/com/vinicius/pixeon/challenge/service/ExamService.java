@@ -12,6 +12,7 @@ import com.vinicius.pixeon.challenge.domain.Exam;
 import com.vinicius.pixeon.challenge.domain.HealthcareInstitution;
 import com.vinicius.pixeon.challenge.dto.ExamRequestDto;
 import com.vinicius.pixeon.challenge.dto.ExamResponseDto;
+import com.vinicius.pixeon.challenge.exception.PixeonNotFoundException;
 import com.vinicius.pixeon.challenge.exception.PixeonServiceException;
 import com.vinicius.pixeon.challenge.exception.PixeonUnauthorizedException;
 import com.vinicius.pixeon.challenge.repository.ExamRepository;
@@ -31,7 +32,7 @@ public class ExamService {
 
     @Transactional
     public ExamResponseDto findById(Long id, Long idHealthcare) {
-        Exam exam = repo.findById(id).orElseThrow(() -> new PixeonServiceException("Exame não encontrado"));
+        Exam exam = repo.findById(id).orElseThrow(() -> new PixeonNotFoundException("Exame não encontrado"));
 
         // Verifica se a instituição possui acesso a este exame
         if (idHealthcare != null && !exam.getHealthcareInstitution().getId().equals(idHealthcare)) {
@@ -53,7 +54,7 @@ public class ExamService {
             return new ExamResponseDto(exam, null);
         }
 
-        throw new PixeonUnauthorizedException("Não é possível acessar o exame, pois a instituição está sem créditos");
+        throw new PixeonUnauthorizedException("Não é possível acessar o exame, pois a instituição está sem crédito");
     }
 
     @Transactional
@@ -61,7 +62,7 @@ public class ExamService {
         validateSaveOrUpdateOperation(dto, OperationType.SAVE);
 
         // Tenta carregar a instituição
-        HealthcareInstitution healthcare = healthcareService.findById(dto.getHealthcareId()).orElseThrow(() -> new PixeonServiceException("Instituição não encontrada"));
+        HealthcareInstitution healthcare = healthcareService.findById(dto.getHealthcareId()).orElseThrow(() -> new PixeonNotFoundException("Instituição não encontrada"));
 
         Exam exam = new Exam();
         exam.setHealthcareInstitution(healthcare);
@@ -88,7 +89,7 @@ public class ExamService {
         validateSaveOrUpdateOperation(dto, OperationType.UPDATE);
 
         // Tenta carregar o exame para atualização
-        Exam exam = repo.findById(dto.getId()).orElseThrow(() -> new PixeonServiceException("Exame não encontrado"));
+        Exam exam = repo.findById(dto.getId()).orElseThrow(() -> new PixeonNotFoundException("Exame não encontrado"));
 
         /*
          * O método de atualização ignora se o id da instituição foi informado. Em
@@ -116,47 +117,47 @@ public class ExamService {
 
     private void validateSaveOrUpdateOperation(ExamRequestDto dto, OperationType operationType) {
         if (dto == null) {
-            throw new PixeonServiceException("É necessário preencher os campos para criar um novo exame");
+            throw new PixeonServiceException("É necessário preencher os campos para criar um novo exame.");
         }
 
         List<String> errorMessages = new ArrayList<>();
 
         if (operationType == OperationType.SAVE && dto.getHealthcareId() == null) {
-            errorMessages.add("É necessário informar o id da instituição");
+            errorMessages.add("É necessário informar o id da instituição.");
         }
 
         if (operationType == OperationType.UPDATE && dto.getId() == null) {
-            errorMessages.add("É necessário informar o id para atualizar o exame");
+            errorMessages.add("É necessário informar o id para atualizar o exame.");
         }
 
         if (dto.getPatientAge() == null || dto.getPatientAge().intValue() < 0 || dto.getPatientAge() > 130) {
-            errorMessages.add("A idade informada do paciente é inválida");
+            errorMessages.add("A idade informada do paciente é inválida.");
         }
 
         if (dto.getPatientGender() == null) {
-            errorMessages.add("É necessário informar o gênero do paciente. Valores válidos: MALE ou FEMALE");
+            errorMessages.add("É necessário informar o gênero do paciente. Valores válidos: MALE ou FEMALE.");
         }
 
         if (!StringUtils.hasText(dto.getPatientName())) {
-            errorMessages.add("É necessário informar o nome do paciente");
+            errorMessages.add("É necessário informar o nome do paciente.");
         }
 
         if (!StringUtils.hasText(dto.getPhysicianCRM())) {
-            errorMessages.add("É necessário informar o CRM");
+            errorMessages.add("É necessário informar o CRM.");
         }
 
         if (!StringUtils.hasText(dto.getPatientName())) {
-            errorMessages.add("É necessário informar o nome do médico");
+            errorMessages.add("É necessário informar o nome do médico.");
         }
 
         if (!StringUtils.hasText(dto.getProcedureName())) {
-            errorMessages.add("É necessário informar o nome do procedimento");
+            errorMessages.add("É necessário informar o nome do procedimento.");
         }
 
         if (!errorMessages.isEmpty()) {
             StringBuilder sb = new StringBuilder();
             errorMessages.forEach(m -> {
-                sb.append(m).append("|");
+                sb.append(m).append(" | ");
             });
             throw new PixeonServiceException(sb.toString());
         }

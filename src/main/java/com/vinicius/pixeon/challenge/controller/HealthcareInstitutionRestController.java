@@ -49,7 +49,7 @@ public class HealthcareInstitutionRestController {
         HealthcareInstitutionResponseDto dto = new HealthcareInstitutionResponseDto(newInstitution.getId(), //
                                                                                     newInstitution.getName(), //
                                                                                     newInstitution.getCnpj(), //
-                                                                                    null, //
+                                                                                    "Instituição de saúde criada com sucesso", //
                                                                                     newInstitution.getCoins());
         return dto;
     }
