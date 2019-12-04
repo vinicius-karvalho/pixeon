@@ -1,7 +1,5 @@
 package com.vinicius.pixeon.challenge.service;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
@@ -10,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.vinicius.pixeon.challenge.domain.HealthcareInstitution;
 import com.vinicius.pixeon.challenge.dto.HealthcareInstitutionRequestDto;
+import com.vinicius.pixeon.challenge.exception.PixeonNotFoundException;
 import com.vinicius.pixeon.challenge.exception.PixeonServiceException;
 import com.vinicius.pixeon.challenge.repository.HealthcareInstitutionRepository;
 
@@ -19,8 +18,8 @@ public class HealthcareInstitutionService {
     @Autowired
     private HealthcareInstitutionRepository repo;
 
-    public Optional<HealthcareInstitution> findById(Long id) {
-        return repo.findById(id);
+    public HealthcareInstitution findById(Long id) {
+        return repo.findById(id).orElseThrow(() -> new PixeonNotFoundException("Instituição de saúde não encontrada"));
     }
 
     public HealthcareInstitution findByName(String name) {

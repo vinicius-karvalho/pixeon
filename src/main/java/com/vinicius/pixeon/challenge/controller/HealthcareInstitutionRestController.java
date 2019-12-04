@@ -1,7 +1,5 @@
 package com.vinicius.pixeon.challenge.controller;
 
-import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,19 +26,13 @@ public class HealthcareInstitutionRestController {
 
     @GetMapping(value = "/{id}", produces = "application/json; charset=utf-8")
     public HealthcareInstitutionResponseDto retrieveHealthcareInstitution(@PathVariable(name = "id", required = true) Long id) {
-        Optional<HealthcareInstitution> healthcareInstitution = service.findById(id);
-        if (healthcareInstitution.isPresent()) {
-            HealthcareInstitutionResponseDto dto = new HealthcareInstitutionResponseDto();
-            dto.setId(healthcareInstitution.get().getId());
-            dto.setName(healthcareInstitution.get().getName());
-            dto.setCnpj(healthcareInstitution.get().getCnpj());
-            dto.setCoins(healthcareInstitution.get().getCoins());
-            return dto;
-        } else {
-            HealthcareInstitutionResponseDto dto = new HealthcareInstitutionResponseDto();
-            dto.setMessage("HealthcareInstitution not found");
-            return dto;
-        }
+        HealthcareInstitution healthcareInstitution = service.findById(id);
+        HealthcareInstitutionResponseDto dto = new HealthcareInstitutionResponseDto();
+        dto.setId(healthcareInstitution.getId());
+        dto.setName(healthcareInstitution.getName());
+        dto.setCnpj(healthcareInstitution.getCnpj());
+        dto.setCoins(healthcareInstitution.getCoins());
+        return dto;
     }
 
     @PostMapping(produces = "application/json; charset=utf-8", consumes = "application/json")

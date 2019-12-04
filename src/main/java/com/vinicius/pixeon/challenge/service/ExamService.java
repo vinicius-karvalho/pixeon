@@ -61,8 +61,8 @@ public class ExamService {
     public ExamResponseDto save(ExamRequestDto dto) {
         validateSaveOrUpdateOperation(dto, OperationType.SAVE);
 
-        // Tenta carregar a instituição
-        HealthcareInstitution healthcare = healthcareService.findById(dto.getHealthcareId()).orElseThrow(() -> new PixeonNotFoundException("Instituição não encontrada"));
+        // Tenta carregar a instituição pelo id
+        HealthcareInstitution healthcare = healthcareService.findById(dto.getHealthcareId());
 
         Exam exam = new Exam();
         exam.setHealthcareInstitution(healthcare);
@@ -159,7 +159,9 @@ public class ExamService {
             errorMessages.forEach(m -> {
                 sb.append(m).append(" | ");
             });
+            sb.delete(sb.lastIndexOf(" | "), sb.length());
             throw new PixeonServiceException(sb.toString());
         }
     }
+
 }
