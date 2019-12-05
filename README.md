@@ -81,7 +81,7 @@ O container estará ouvindo em: `http://[hostname or ip]:8080`
         "id" : 2,
         "patientName" : "Fernanda de Melo",
         "patientAge" : 36,
-        "patientGender" : "Female",
+        "patientGender" : "FEMALE",
         "physicianName" : "José de Alcântara",
         "physicianCRM" : "1001",
         "procedureName" : "Colesterol"
@@ -94,7 +94,7 @@ O container estará ouvindo em: `http://[hostname or ip]:8080`
         "healthcareName" : "Clínica A",
         "patientName" : "Fernanda de Melho",
         "patientAge" : 36,
-        "patientGender" : "MALE",
+        "patientGender" : "FEMALE",
         "physicianName" : "José de Alcântara",
         "physicianCRM" : "1001",
         "procedureName" : "Colesterol",
